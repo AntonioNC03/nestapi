@@ -5,11 +5,12 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { AlumnoModule } from './alumno/alumno.module';
 import { BibliotecaModule } from './biblioteca/biblioteca.module';
 import { PokemonsModule } from './pokemons/pokemons.module';
+import { PeliculasModule } from './peliculas/peliculas.module';
 
 @Module({
   imports: [ConfigModule.forRoot({isGlobal:true,}), 
     TypeOrmModule.forRoot({
-      name:'base1',
+      name:'nestapi1',
       type:'mysql',
       host:process.env.URL,
       port:3306,
@@ -20,20 +21,21 @@ import { PokemonsModule } from './pokemons/pokemons.module';
       synchronize:true
     }),
     TypeOrmModule.forRoot({
-      name:'base2',
+      name:'nestapi2',
       type:'mysql',
       host:process.env.URL,
       port:3306,
       username:process.env.USUARIO,
       password:process.env.PASSWORD,
       database: process.env.DBNAME2,
-      autoLoadEntities:true,//Esta es la mejor opción para que coja sólo las que haya en módulo
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],//Esta es la mejor opción para que coja sólo las que haya en módulo
       synchronize:true
     }),
     UsuarioModule,
     AlumnoModule,
     BibliotecaModule,
-    PokemonsModule
+    PokemonsModule,
+    PeliculasModule
   ],
   controllers: [],
   providers: [],
